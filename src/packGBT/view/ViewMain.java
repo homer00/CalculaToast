@@ -13,7 +13,7 @@ public class ViewMain extends JFrame{
 
 	// CONSTRUCTOR
 	public ViewMain(){
-		super("CalculaTruite - M.Daniel");
+		super("CalculaToast - M.Daniel");
 		this.setDefaultCloseOperation(EXIT_ON_CLOSE);
 		this.setPreferredSize(new Dimension(800,600));
 		System.out.println("Salut les Kids !");

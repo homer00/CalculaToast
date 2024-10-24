@@ -60,7 +60,7 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 		//pan1.setAlignmentX(FlowLayout.CENTER);
 		//pan1.setAlignmentY(FlowLayout.CENTER);
 		pan1.setBackground(mainColor);
-		jl2 = new JLabel("Calculatruite : une expérience Javanesque !");
+		jl2 = new JLabel("CalculaToast: une expérience Javanesque !");
 		//jl2.setFont(new Font("Arial", ));
 		jl3 = new JLabel("  ");
 		pan1.setSize(20,70);
