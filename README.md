@@ -10,10 +10,15 @@ Des améliorations sont aussi en projet, comme l'ajout d'un menu principal, l'ut
 
 
 Pour tester le programme :
+
 Un exécutable jar est disponible : CalculaToast_261024.jar
 
+
 Exécution sous linux :
+
 user@machine:$ java -jar CalculaToast_261024.jar
 
+
 Sous Windows, la commande est identique :
+
 PS C:\Chemin_du_dossierJAR> java -jar CalculaToast_261024.jar 
