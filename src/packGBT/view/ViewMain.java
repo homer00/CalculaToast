@@ -22,7 +22,7 @@ public class ViewMain extends JFrame{
 		this.setBackground(new Color(150,50,210));
 	}
 
-	// MAIN
+	// MAIN8
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
 		ViewMain vm1 = new ViewMain();
