@@ -21,4 +21,4 @@ user@machine:$ java -jar CalculaToast_261024.jar
 
 Sous Windows, la commande est identique :
 
-PS C:\Chemin_du_dossierJAR> java -jar CalculaToast_261024.jar 
+PS C:\Chemin_du_dossierJAR> java -jar CalculaToast_271024.jar 
