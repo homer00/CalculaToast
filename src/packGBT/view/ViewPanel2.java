@@ -7,16 +7,22 @@ import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.GridBagConstraints;
 import java.awt.GridBagLayout;
+import java.awt.Image;
 import java.awt.Insets;
+import java.awt.Toolkit;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.font.TextAttribute;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.util.Collections;
 
+import javax.imageio.ImageIO;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
@@ -36,8 +42,8 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 
 	private Dimension panDim3,panDim4;
 	//private JPanel jpChiffres;
-	public JLabel jl2, jl3;
-	private JTextField jt1, jt2, jt3;
+	public JLabel jl2, jl3, jlToast;
+	private JTextField jt1, jt2;
 	private JButton jb1,jb2,jb3,jb4,jb5,jb6,jb7,jb8,jb9,jb0,jbPoint;
 	private JButton jbDiv, jbPlus, jbMoins, jbMult, jbRes;
 	private JButton jbAC;
@@ -45,6 +51,8 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 	private JTextArea jta1,jta2,jta3,jta4, jtaRes;
 	private ViewMain laVm;
 	public Color mainColor;
+	public Image toastimg;
+	protected String monFichierImage;
 	
 	public ViewPanel2(ViewMain vm) {
 		this.laVm = vm;
@@ -52,7 +60,7 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 		panDim4 = new Dimension((int)(panDim3.width-0.2*panDim3.width),(int)(panDim3.height-0.2*panDim3.height));
 		System.out.println("panDim3 : "+ panDim3);
 		System.out.println("panDim4 : "+ panDim4);
-		mainColor = new Color (160,216,180);
+		mainColor = new Color (180,200,216);
 		this.setLayout(new BoxLayout(this,BoxLayout.PAGE_AXIS)); // JPanel ==> BoxLayout
 		// ajout d'un autre JPanel
 		JPanel pan1 = new JPanel();
@@ -60,7 +68,7 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 		//pan1.setAlignmentX(FlowLayout.CENTER);
 		//pan1.setAlignmentY(FlowLayout.CENTER);
 		pan1.setBackground(mainColor);
-		jl2 = new JLabel("CalculaToast: une expérience Javanesque !");
+		jl2 = new JLabel("CalculaToast : une expérience Javanesque !");
 		//jl2.setFont(new Font("Arial", ));
 		jl3 = new JLabel("  ");
 		pan1.setSize(20,70);
@@ -249,19 +257,56 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 		jbRes.addActionListener(this);
 		
 		// Panel à droite du pavé numérique
-		JPanel panSide = new JPanel();
+		//JPanel panSide = new JPanel();
+		
+		
+		// ============================= IMAGE LOGO
+				monFichierImage = "src/packGBT/Images/Toaster2d.png";
+				//System.out.println("URL local : "+System.getProperty("user.dir"));
+				
+				try {
+				    BufferedImage toaster = ImageIO.read(new File(monFichierImage));
+				    ImageIcon imageToaster = new ImageIcon(toaster);
+				    toastimg = imageToaster.getImage(); // récupère dans un objet de type "Image" (ImageIcon --> Image)
+				    Image scaledImg = toastimg.getScaledInstance(60,90, java.awt.Image.SCALE_SMOOTH);
+				    imageToaster = new ImageIcon(scaledImg); // on passe l'image modifiée dans le type ImageIcon (qu'on réaffecte à imagePeppa)
+				    jlToast = new JLabel(imageToaster);
+				    jlToast.setOpaque(true);
+				    jlToast.setAlignmentX(LEFT_ALIGNMENT);
+				    //panSide.add(jlToast);
+				    System.out.println("Fin ajout image Toaster");
+				    
+				}
+				catch (Exception e) {
+					System.out.println("Erreur pour l'affichage du logo : "+e.getMessage());
+				}
+		
+		Image backtoastimg = Toolkit.getDefaultToolkit().createImage(monFichierImage);
+		//JpanelImg jpi = new JpanelImg(backtoastimg);
+		//panSide.drawImage(backtoastimg, 0, 0, null);
+		JpanelImg panSide = new JpanelImg(backtoastimg); // JpanelImg classe spéciale pour afficher une image en fond de JPanel
 		panSide.setLayout(new BoxLayout(panSide,BoxLayout.PAGE_AXIS));
+		panSide.setBackground(mainColor);
 		jta1 = new JTextArea(" Respect de la précédence\n des opérateurs");//("Joyau de la technologie,\nprécision inégalée",2,1);
+		jta1.setMaximumSize(jta1.getMinimumSize());
 		jta1.setBackground(Color.orange);
 		jta2 = new JTextArea(" Absence de parenthèses"); //("Respect de la précé-\ndence des opérateurs",2,1);
-		jta3 = new JTextArea("");
-		jta4 = new JTextArea("");
+		jta2.setMaximumSize(jta2.getMaximumSize());
+		//jta3 = new JTextArea("");
+		
 		
 		panSide.add(jta1);panSide.add(jta2);
-		panSide.add(jta3);panSide.add(jta4);
+		try {
+			//panSide.add(jlToast);
+		}
+		catch (Exception e1) {
+			System.out.println("Erreur ajout image (jlToast) : "+e1.getMessage());
+		}
+		
+		//panSide.add(jta3);
 		
 		pan2.setBorder(new MatteBorder(1, 1, 1, 1, Color.black));
-		panSide.setBorder(new MatteBorder(1, 1, 1, 1, Color.DARK_GRAY));
+		panSide.setBorder(new MatteBorder(1, 1, 1, 1, mainColor));
 		
 		
 		//jpChiffres.add(jb1,gbcL1);
@@ -277,9 +322,10 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 		panContainMain.add(pan2);
 		
 		Dimension dimPanSide = new Dimension(jta1.getPreferredSize().width+6,(int)pan2.getPreferredSize().getHeight());
-		panSide.setBackground(Color.GRAY);
+		//panSide.setBackground(Color.WHITE);
+		
 		System.out.println("dimPanSide : "+ dimPanSide);
-		panSide.setMaximumSize(new Dimension(100,(int)pan2.getPreferredSize().getHeight())); // marche pas pour limiter la largeur
+		//panSide.setMaximumSize(new Dimension(100,(int)pan2.getPreferredSize().getHeight())); // marche pas pour limiter la largeur
 		panSide.setPreferredSize(dimPanSide);
 		
 		System.out.println("panSide height : "+panSide.getPreferredSize().height);
@@ -301,6 +347,7 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 		panRes.setLayout(new BoxLayout(panRes,BoxLayout.LINE_AXIS)); // pan1b ==> BoxLayout Pour affichage Résultat
 
 		panRes.setBackground(Color.DARK_GRAY);
+		
 		//panRes.setAlignmentX(RIGHT_ALIGNMENT);
 		
 		jtaRes = new JTextArea("",1,2); // texte, lignes, colonnes,
@@ -311,6 +358,7 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 		jtaRes.setAlignmentX(Component.LEFT_ALIGNMENT);
 		jtaRes.setBackground(Color.DARK_GRAY);
 		jtaRes.setForeground(mainColor);
+		jtaRes.setEditable(false);
 		
 		
 		JTextArea jtaRes_bout = new JTextArea("#");
@@ -460,12 +508,18 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 		if(evt.getSource()==jbAC) {
 			//appendJt1("=");
 			jt1.setText("");
+			jt2.setText("");
+			setJtaRes("");
+			jta1.setVisible(false);
+			jta2.setVisible(false);
 			System.out.println("Evenement source jbRes : calcul résultat");
 		}
 		
 		if(evt.getSource()==jbRes) {
 			//appendJt1("=");
 			Ccalc ctrl1 = new Ccalc(laVm, this);
+			jta1.setVisible(false);
+			jta2.setVisible(false);
 			System.out.println("Evenement source jbRes ou [Enter] key pressed : calcul résultat");
 		}
 		
@@ -527,6 +581,8 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
+		jta1.setVisible(false);
+		jta2.setVisible(false);
 		
 	}
 
@@ -535,6 +591,8 @@ public class ViewPanel2 extends JPanel implements ActionListener, KeyListener {
 		// TODO Auto-generated method stub
 		if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 			Ccalc ctrl1 = new Ccalc(laVm, this);
+			jta1.setVisible(false);
+			jta2.setVisible(false);
 			System.out.println("Evenement source [Enter] key pressed : calcul résultat");
 		}
 		

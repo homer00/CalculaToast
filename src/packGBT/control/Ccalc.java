@@ -1,3 +1,5 @@
+// revision : 27/10/24
+
 package packGBT.control;
 
 import java.util.ArrayList;
@@ -20,6 +22,9 @@ public class Ccalc {
 	vp2.getJtaRes().setText("On avance bien !");
 
 	String bloc_recup = vp2.getJT1().getText(); // récupération du JTextField jt1
+	if (bloc_recup.equals("")){ // traite le cas ou aucune donnée n'a été entrée.
+		bloc_recup="0";
+	}
 	String bloc_recup_t = bloc_recup.replaceAll(" ","");
 	//System.out.println("bloc_recup size : "+bloc_recup.length());
 	//System.out.println("bloc_recup_t size : "+bloc_recup_t.length());
@@ -127,14 +132,19 @@ public class Ccalc {
 	while (listSP2.contains("*") || listSP2.contains("/")) {
 		for (int i=0; i<listSP2.size(); i++) {
 			if (listSP2.get(i).equals("*")) {
-				
-				calc_temp = (Float.parseFloat(listSP2.get(i-1)))*(Float.parseFloat(listSP2.get(i+1)));
-				listSP2.set(i, String.valueOf(calc_temp)); 
-				listSP2.remove(i-1); // 
-				listSP2.remove(i); //
-				i+=2;
-				System.out.println("Debug Mult  "+listDebug);
-				System.out.println("taille l138 : "+listSP2.size()+" pour i="+i);
+				if (listSP2.get(i+1).equals("-") && i<listSP2.size()-1) { // traite le cas où la valeur suivante est un nombre négatif : exemple : 6*-7
+					calc_temp = (Float.parseFloat(listSP2.get(i-1)))*(Float.parseFloat(listSP2.get(i+2)))*(-1);
+				}
+				else {
+					
+					calc_temp = (Float.parseFloat(listSP2.get(i-1)))*(Float.parseFloat(listSP2.get(i+1)));
+				}
+					listSP2.set(i, String.valueOf(calc_temp)); 
+					listSP2.remove(i-1); // 
+					listSP2.remove(i); //
+					i+=2;
+					System.out.println("Debug Mult  "+listDebug);
+					System.out.println("taille l138 : "+listSP2.size()+" pour i="+i);
 				
 				//if (i<(listSP2.size())) { listSP2.remove(i+1); } // suppression de la valeur suivante si elle existe.
 			}
@@ -143,7 +153,12 @@ public class Ccalc {
 		for (int i=0; i<listSP2.size(); i++) {	
 			
 				if (listSP2.get(i).equals("/")) {
-					calc_temp = (Float.parseFloat(listSP2.get(i-1)))/(Float.parseFloat(listSP2.get(i+1)));
+					if (listSP2.get(i+1).equals("-") && i<listSP2.size()-1) { // traite le cas où la valeur suivante est un nombre négatif : exemple : 6*-7
+						calc_temp = (Float.parseFloat(listSP2.get(i-1)))/(Float.parseFloat(listSP2.get(i+2)))*(-1);
+					}
+					else {
+						calc_temp = (Float.parseFloat(listSP2.get(i-1)))/(Float.parseFloat(listSP2.get(i+1)));
+					}
 					listSP2.set(i, String.valueOf(calc_temp)); 
 					listSP2.remove(i-1); // 
 					listSP2.remove(i); //
@@ -158,8 +173,11 @@ public class Ccalc {
 	// affichage du calcul intermédiaire
 	String calcul_intermediaire = "";
 	for (int i=0; i<listSP2.size(); i++) {
-		calcul_intermediaire += listSP2.get(i);
+		//if (listSP2.get(i-1).equals("+") || listSP2.get(i-1).equals("-")) { 
+			calcul_intermediaire += listSP2.get(i);
+		//}
 	}
+	// si listSP2.size()-1 différent de *,/,+,- => on remove le dernier élément calcul_intermediaire -= listSP2.get(listSP2.size()-1;
 	vp2.setJt2(calcul_intermediaire);
 	
 	calc_temp2 = calc_temp; // permet d'obtenir le résultat final si il n'y a aucune Addition ni soustraction. 
@@ -227,63 +245,7 @@ public class Ccalc {
 	
 	if (!flag_error) { vp2.setJtaRes("Résultat :  "+calc_temp2); }
 	
-	/*
-	longueur_elem=0;
-	longueur_cumulee=0;
-	position = 0;
-	float calc_temp = 0f;
 	
-	for (int i = 0; i<splitted_bloc.length-1; i++) { // on s'arrête avant la dernière valeur. 
-		longueur_elem = splitted_bloc[i].length();
-		longueur_cumulee += longueur_elem;
-		position = longueur_cumulee +i;
-		switch (bloc_recup_t.charAt(position)){ // on check l'opérateur qui suit la valeur numérique
-		case '*':
-		case 'x':
-			System.out.println("*** MULTIPLICATION ***");
-			calc_temp = Float.parseFloat(splitted_bloc[i]) * Float.parseFloat(splitted_bloc[i+1]);
-			if (i<tab_op.size()-1) {
-				//laListe.add(new CalcSimplifie(Float.parseFloat(splitted_bloc[i]),'*',Character.valueOf(tab_op.get(i+1))));
-				laListe.add(new CalcSimplifie(calc_temp, Character.valueOf(tab_op.get(i+1))));
-			}
-			else if (i==tab_op.size()) {
-				//laListe.add(new CalcSimplifie(Float.parseFloat(splitted_bloc[i]),'0','0'));
-				laListe.add(new CalcSimplifie(calc_temp,'0'));
-			}
-			break;
-		case '/':
-			System.out.println("*** DIVISION ***");
-			calc_temp = Float.parseFloat(splitted_bloc[i]) / Float.parseFloat(splitted_bloc[i+1]);
-			if (i<tab_op.size()-1) {
-				//laListe.add(new CalcSimplifie(Float.parseFloat(splitted_bloc[i]),'/',Character.valueOf(tab_op.get(i+1))));
-				laListe.add(new CalcSimplifie(calc_temp, Character.valueOf(tab_op.get(i+1))));
-			}
-			else if (i==tab_op.size()) {
-				//laListe.add(new CalcSimplifie(Float.parseFloat(splitted_bloc[i]),'0','0'));
-				laListe.add(new CalcSimplifie(calc_temp,'0'));
-			}
-			break;
-						
-		}
-		
-	}
-	// Traitement du dernier cas : dernière opération en fin de ligne
-	if (tab_op.get(tab_op.size())=='*' ||  tab_op.get(tab_op.size())=='x') {
-		//
-	System.out.println("Traitement DERNIER CAS");	
-	}
-	
-	ListIterator<CalcSimplifie> li = laListe.listIterator();
-	while (li.hasNext()) {
-		System.out.println("li.next : "+li.next().valeur);
-		//System.out.println("li.next : "+li.next().op_now);
-		//System.out.println("li.next : "+li.next().op_next);
-		//li.next().affiche_CalcSimplifie();
-	}
-	
-	System.out.println("Taille laListe : "+laListe.size());
-	
-*/	
 	
 	}
 }

@@ -302,3 +302,63 @@ public class Control1 {
 		return n1+n2;
 	}
 }
+
+// ===========================	Travaux exportés de Ccalc.java (méthode abandonnée)
+
+/*
+longueur_elem=0;
+longueur_cumulee=0;
+position = 0;
+float calc_temp = 0f;
+
+for (int i = 0; i<splitted_bloc.length-1; i++) { // on s'arrête avant la dernière valeur. 
+	longueur_elem = splitted_bloc[i].length();
+	longueur_cumulee += longueur_elem;
+	position = longueur_cumulee +i;
+	switch (bloc_recup_t.charAt(position)){ // on check l'opérateur qui suit la valeur numérique
+	case '*':
+	case 'x':
+		System.out.println("*** MULTIPLICATION ***");
+		calc_temp = Float.parseFloat(splitted_bloc[i]) * Float.parseFloat(splitted_bloc[i+1]);
+		if (i<tab_op.size()-1) {
+			//laListe.add(new CalcSimplifie(Float.parseFloat(splitted_bloc[i]),'*',Character.valueOf(tab_op.get(i+1))));
+			laListe.add(new CalcSimplifie(calc_temp, Character.valueOf(tab_op.get(i+1))));
+		}
+		else if (i==tab_op.size()) {
+			//laListe.add(new CalcSimplifie(Float.parseFloat(splitted_bloc[i]),'0','0'));
+			laListe.add(new CalcSimplifie(calc_temp,'0'));
+		}
+		break;
+	case '/':
+		System.out.println("*** DIVISION ***");
+		calc_temp = Float.parseFloat(splitted_bloc[i]) / Float.parseFloat(splitted_bloc[i+1]);
+		if (i<tab_op.size()-1) {
+			//laListe.add(new CalcSimplifie(Float.parseFloat(splitted_bloc[i]),'/',Character.valueOf(tab_op.get(i+1))));
+			laListe.add(new CalcSimplifie(calc_temp, Character.valueOf(tab_op.get(i+1))));
+		}
+		else if (i==tab_op.size()) {
+			//laListe.add(new CalcSimplifie(Float.parseFloat(splitted_bloc[i]),'0','0'));
+			laListe.add(new CalcSimplifie(calc_temp,'0'));
+		}
+		break;
+					
+	}
+	
+}
+// Traitement du dernier cas : dernière opération en fin de ligne
+if (tab_op.get(tab_op.size())=='*' ||  tab_op.get(tab_op.size())=='x') {
+	//
+System.out.println("Traitement DERNIER CAS");	
+}
+
+ListIterator<CalcSimplifie> li = laListe.listIterator();
+while (li.hasNext()) {
+	System.out.println("li.next : "+li.next().valeur);
+	//System.out.println("li.next : "+li.next().op_now);
+	//System.out.println("li.next : "+li.next().op_next);
+	//li.next().affiche_CalcSimplifie();
+}
+
+System.out.println("Taille laListe : "+laListe.size());
+
+*/	
