@@ -9,17 +9,17 @@ Quelques bogues minimes, gestions d'erreurs à corriger.
 Des améliorations sont aussi en projet, comme l'ajout d'un menu principal, l'utilisation de parenthèses, logo, traduction, etc...
 
 
-** Pour tester le programme : **
+**Pour tester le programme :**
 
 Un exécutable jar est disponible : CalculaToast_271024.jar
 
 
-** Exécution sous linux : **
+**Exécution sous linux :**
 ```bash
 user@machine:$ java -jar CalculaToast_261024.jar
 ```
 
-** Sous Windows, la commande est identique : **
+**Sous Windows, la commande est identique :**
 ```bash
 PS C:\Chemin_du_dossierJAR> java -jar CalculaToast_271024.jar 
 ```
