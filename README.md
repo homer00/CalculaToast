@@ -13,8 +13,13 @@ Des améliorations sont aussi en projet, comme l'ajout d'un menu principal, l'ut
 
 Un exécutable jar est disponible : CalculaToast_271024.jar
 
+***D'autres versions exportées avec des librairies différentes (OpenJDK 17; Oracle, Défaut Jre) :***
+CalculaToast_191224.jar
+CalculaToast_191224_B.jar
+CalculaToast_191224_C.jar
 
-**Exécution sous linux :**
+
+**Exécution sous Linux :**
 ```bash
 user@machine:$ java -jar CalculaToast_261024.jar
 ```
